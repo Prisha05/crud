@@ -1,0 +1,165 @@
+<!-- include header -->
+<%- include('include/_header') %>
+<!-- /include header -->
+
+<!-- Sidebar -->
+<nav id="sidebar">
+    <ul class="list-unstyled components">
+        <li class="active">
+            <a href="" class="dashboard"><span>Create Groups</span></a>
+        </li>
+        <li class="dropdown">
+            <a href="#homeSubmenu1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Server & Connection</a>
+        </li>
+        <li class="dropdown">
+            <a href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><span>Assign roles</span></a>
+        </li>
+    </ul>
+</nav>
+<!-- /Sidebar -->
+<main id="site-main">
+    <div class="container">
+        <form id="add-user" action="/api/users" method="POST">
+            <div class="options-container">
+                <label>Assign access to group</label>
+                <div class="options">
+                    <input type="checkbox" id="read-option" name="read">
+                    <label for="read-option">Read</label>
+
+                    <input type="checkbox" id="write-option" name="write">
+                    <label for="write-option">Write</label>
+
+                    <input type="checkbox" id="delete-option" name="delete">
+                    <label for="delete-option">Delete</label>
+                </div>
+            </div>
+            <div class="group-container">
+                <h2>Group name</h2>
+                <div class="input-container">
+                    <input type="text" name="groupname" id="groupname" placeholder="Enter group name">
+                    <button type="submit" class="border-shadow" id="create-button">Create</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Your existing HTML content -->
+        <select id="search-select">
+            <option value="id">ID</option>
+            <option value="user">User</option>
+            <option value="groupname">Group Name</option>
+            <option value="lastmodifieddate">Last Modified Date</option>
+        </select>
+        <input type="text" id="search-input" class="search-input" placeholder="Search..." oninput="searchTemplates(this.value)">
+
+        <button id="search-button" class="border-shadow">Search</button>
+        <!-- form handling -->
+        <form action="/" method="POST">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Date</th>
+                        <th>User</th>
+                        <th>Group Name</th>
+                        <th>Last Modified Date</th>
+                        <th>Read</th>
+                        <th>Write</th>
+                        <th>Delete</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%- include('include/_show') %>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</main>
+        <!-- Form handling -->
+        <form action="/" method="POST">
+            <!-- Your existing table -->
+        </form>
+    </div>
+
+        <script>
+        document.getElementById("create-button").addEventListener("click", function() {
+            var groupName = document.getElementById("groupname").value;
+            if (groupName.trim() === "") {
+                alert("Please enter a group name.");
+                return;
+            }
+            var confirmation = confirm("Are you sure you want to create the group '" + groupName + "'?");
+            if (confirmation) {
+                // Generate date, time, and user
+                var currentDate = new Date();
+                var date = currentDate.toISOString().split('T')[0];
+                var time = currentDate.toTimeString().split(' ')[0];
+                var user = "SomeUser"; // Replace this with your actual user logic
+                
+                // Add logic to save data to database (AJAX request or form submission)
+                saveToDatabase(groupName, date, time, user);
+            }
+        });
+        
+        function saveToDatabase(groupName, date, time, user) {
+            // Here you can implement the logic to save data to your database
+            // For example, you can make an AJAX request to a server-side script
+            // or directly submit a form to a server endpoint.
+            // This is a placeholder function, you should replace it with your actual implementation.
+            console.log("Group Name: " + groupName);
+            console.log("Date: " + date);
+            console.log("Time: " + time);
+            console.log("User: " + user);
+        }
+        </script>
+   
+<!-- /Main Site -->
+<script src="index.js"></script>
+<!-- include footer -->
+<%- include('include/_footer') %>
+<!-- /include footer -->
+<script>
+    document.getElementById("create-button").addEventListener("click", function() {
+        var groupName = document.getElementById("groupname").value;
+        if (groupName.trim() === "") {
+            alert("Please enter a group name.");
+            return;
+        }
+        var confirmation = confirm("Are you sure you want to create the group '" + groupName + "'?");
+        if (confirmation) {
+            // Generate date, time, and user
+            var currentDate = new Date();
+            var date = currentDate.toISOString().split('T')[0];
+            var time = currentDate.toTimeString().split(' ')[0];
+            var user = "SomeUser"; // Replace this with your actual user logic
+            
+            // Add logic to save data to database (AJAX request or form submission)
+            saveToDatabase(groupName, date, time, user);
+        }
+    });
+    
+    function saveToDatabase(groupName, date, time, user) {
+        // Here you can implement the logic to save data to your database
+        // For example, you can make an AJAX request to a server-side script
+        // or directly submit a form to a server endpoint.
+        // This is a placeholder function, you should replace it with your actual implementation.
+        // Example AJAX request
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/api/users", true);
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // Data saved successfully
+                console.log("Data saved successfully.");
+            }
+        };
+        var data = JSON.stringify({
+            groupName: groupName,
+            date: date,
+            time: time,
+            user: user
+        });
+        xhr.send(data);
+    }
+    </script>
+    

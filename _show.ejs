@@ -1,0 +1,23 @@
+<% for(var i = 0; i < users.length; i++) { %>
+    <tr>
+        <td><%= users[i]._id %></td> <!-- ID -->
+        <td><%= users[i].date %></td> <!-- Date -->
+        <td><%= users[i].user%></td> <!-- User -->
+        <td><%= users[i].groupname %></td> <!-- Group Name -->
+        <td><%= users[i].last_modified_date %></td> <!-- Last Modified Date -->
+        <td><input type="checkbox" <% if(users[i].read) { %> checked <% } %> disabled></td> <!-- Read -->
+        <td><input type="checkbox" <% if(users[i].write) { %> checked <% } %> disabled></td> <!-- Write -->
+        <td><input type="checkbox" <% if(users[i].delete) { %> checked <% } %> disabled></td> <!-- Delete -->
+        <td>
+            <div class="btn-group">
+                <a href="/update-user?id=<%= users[i]._id%>" class="btn border-shadow update">
+                    <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span>
+                </a>
+                <a class="btn border-shadow delete" data-id=<%= users[i]._id%> >
+                    <span class="text-gradient"><i class="fas fa-times"></i></span>
+                </a>
+            </div>
+        </td>
+        
+    </tr>
+<% } %>

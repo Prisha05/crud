@@ -1,0 +1,46 @@
+<!-- form handling -->
+<form action="/api/users" method="POST" id="add_user">
+    <div class="new_user">
+        <div class="form-group">
+            <label for="date" class="text-light">Date</label>
+            <input type="date" name="date" id="date" placeholder="YYYY-MM-DD" readonly>
+        </div>
+        
+        <div class="form-group">
+            <label for="userName" class="text-light">User Name</label>
+            <input type="text" name="user" id="userName" placeholder="xyz" readonly>
+        </div>
+        
+        <div class="form-group">
+            <label for="groupname" class="text-light">Group Name</label>
+            <input type="text" class="form-control" id="groupname" name="groupname" placeholder="Enter group name">
+        </div>
+
+        <div class="form-group">
+            <label for="last_modified_date" class="text-light">Last Modified Date</label>
+            <input type="datetime-local" class="form-control" id="last_modified_date" name="last_modified_date" readonly>
+        </div>
+        
+        <div class="form-group">
+            <button type="submit" class="btn text-dark update">Save</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    // Dynamically set the current date
+    document.getElementById('date').valueAsDate = new Date();
+
+    // Get the system environment username
+    document.getElementById('userName').value = '<%= process.env.USER %>';
+
+    // Dynamically set the current date and time for last_modified_date
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const hours = currentDate.getHours().toString().padStart(2, '0');
+    const minutes = currentDate.getMinutes().toString().padStart(2, '0');
+    const formattedDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
+    document.getElementById('last_modified_date').value = formattedDateTime;
+</script>
